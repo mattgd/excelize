@@ -70,10 +70,11 @@ func readFile(file *zip.File) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer rc.Close()
+	
 	dat := make([]byte, 0, file.FileInfo().Size())
 	buff := bytes.NewBuffer(dat)
 	_, _ = io.Copy(buff, rc)
-	rc.Close()
 	return buff.Bytes(), nil
 }
 
