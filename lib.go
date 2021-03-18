@@ -72,10 +72,10 @@ func readFile(file *zip.File) ([]byte, error) {
 	}
 	defer rc.Close()
 
-	numBytes := file.FileInfo().Size()
-	dat := make([]byte, 0, numBytes)
+	dat := make([]byte, 0, file.FileInfo().Size())
 	buff := bytes.NewBuffer(dat)
-	_, _ = io.CopyN(buff, rc, numBytes)
+	_, _ = io.Copy(buff, rc)
+	dat = nil
 
 	return buff.Bytes(), nil
 }
